@@ -5,6 +5,7 @@ import TranslationProvider from "@/TranslationProvider";
 import serverTranslation from "../i18n/server";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
+import MainLayout from "@/components/MainLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,8 +32,10 @@ export default async function RootLayout({
 						defaultTheme="system"
 						enableSystem
 						disableTransitionOnChange>
-						<Navbar />
-						{children}
+						<MainLayout>
+							<Navbar />
+							{children}
+						</MainLayout>
 					</ThemeProvider>
 				</TranslationProvider>
 			</body>

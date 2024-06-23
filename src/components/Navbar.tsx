@@ -2,9 +2,9 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
 	return (
-		<div>
+		<nav className="flex justify-end">
 			<ThemeToggle />
-		</div>
+		</nav>
 	);
 };
 
