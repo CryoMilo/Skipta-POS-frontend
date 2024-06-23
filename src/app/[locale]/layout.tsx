@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "../../styles/globals.css";
 import TranslationProvider from "@/TranslationProvider";
 import serverTranslation from "../i18n/server";
+import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +26,14 @@ export default async function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<TranslationProvider resources={resources} locale={locale}>
-					{children}
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange>
+						<Navbar />
+						{children}
+					</ThemeProvider>
 				</TranslationProvider>
 			</body>
 		</html>
