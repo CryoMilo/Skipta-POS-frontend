@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 
 const MainLayout = (props: { children: ReactNode }) => {
 	return (
-		<div className="flex h-[100vh]">
+		<div className="flex">
 			<Sidebar />
 			<div className="w-full">{props.children}</div>
 		</div>
