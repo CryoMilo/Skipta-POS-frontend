@@ -1,5 +1,3 @@
-import { MoreHorizontal } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,13 +9,6 @@ import {
 	CardTitle
 } from "@/components/ui/card";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import {
 	Table,
 	TableBody,
 	TableCell,
@@ -26,60 +17,47 @@ import {
 	TableRow
 } from "@/components/ui/table";
 import { Order } from "@/types/orders";
-
-const orders: Order[] = [
-	{
-		id: "6659994f805c76ed0da2d137",
-		customerName: "Damian",
-		menuName: "Si Chet",
-		vege: true,
-		soup: false,
-		orderCompleted: false,
-		createdAt: "2024-05-31T09:33:03.289Z"
-	}
-	// Add more orders as needed
-];
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getOrderList } from "@/services/orders";
 
 const OrderTableRow = ({ order }: { order: Order }) => (
 	<TableRow>
+		<TableCell className="font-medium">
+			<Avatar>
+				<AvatarImage src="https://github.com/shadcn.png" />
+				<AvatarFallback>V</AvatarFallback>
+			</Avatar>
+		</TableCell>
 		<TableCell className="font-medium">{order.menuName}</TableCell>
 		<TableCell>{order.customerName}</TableCell>
 		<TableCell>
-			<Badge variant="outline">
-				{order.vege ? "Vegetarian" : "Non-Vegetarian"}
-			</Badge>
+			<Badge variant="outline">{order.vege ? "Yes" : "No"}</Badge>
 		</TableCell>
 		<TableCell>
-			<Badge variant="outline">{order.soup ? "With Soup" : "No Soup"}</Badge>
+			<Badge variant="outline">{order.soup ? "Yes" : "No"}</Badge>
 		</TableCell>
-		<TableCell>{order.orderCompleted ? "Completed" : "Pending"}</TableCell>
 		<TableCell className="hidden md:table-cell">
 			{new Date(order.createdAt).toLocaleString()}
 		</TableCell>
+		<TableCell>{order.orderCompleted ? "Completed" : "Pending"}</TableCell>
 		<TableCell>
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button aria-haspopup="true" size="icon" variant="ghost">
-						<MoreHorizontal className="h-4 w-4" />
-						<span className="sr-only">Toggle menu</span>
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent align="end">
-					<DropdownMenuLabel>Actions</DropdownMenuLabel>
-					<DropdownMenuItem>Edit</DropdownMenuItem>
-					<DropdownMenuItem>Delete</DropdownMenuItem>
-				</DropdownMenuContent>
-			</DropdownMenu>
+			<Button>Completed</Button>
 		</TableCell>
 	</TableRow>
 );
 
-export default function OrderTable() {
+export const OrderTable = async () => {
+	const data = await getOrderList();
+
+	const orders: Order[] = data;
+
 	return (
 		<Card>
 			<CardHeader>
 				<CardTitle>Orders</CardTitle>
-				<CardDescription>There are currently 500 orders</CardDescription>
+				<CardDescription>
+					There are currently {orders.length || 0} orders
+				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<Table>
@@ -93,13 +71,14 @@ export default function OrderTable() {
 							<TableHead className="hidden md:table-cell">Vegetables</TableHead>
 							<TableHead className="hidden md:table-cell">Soup</TableHead>
 							<TableHead className="hidden md:table-cell">Created at</TableHead>
+							<TableHead className="hidden md:table-cell">Status</TableHead>
 							<TableHead>
 								<span className="sr-only">Order Completed</span>
 							</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{orders.map((order) => (
+						{orders.map((order: Order) => (
 							<OrderTableRow key={order.id} order={order} />
 						))}
 					</TableBody>
@@ -112,4 +91,4 @@ export default function OrderTable() {
 			</CardFooter>
 		</Card>
 	);
-}
+};
