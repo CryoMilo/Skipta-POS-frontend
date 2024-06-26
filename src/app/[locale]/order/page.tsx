@@ -1,6 +1,6 @@
 import { OrderTable } from "./OrderTable";
 
-const Kitchen = () => {
+const Order = () => {
 	return (
 		<div className="p-10">
 			<OrderTable />
@@ -8,4 +8,4 @@ const Kitchen = () => {
 	);
 };
 
-export default Kitchen;
+export default Order;
