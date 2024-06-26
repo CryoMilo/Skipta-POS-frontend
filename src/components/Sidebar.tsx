@@ -17,13 +17,19 @@ const Sidebar = () => {
 		{
 			id: 2,
 			name: "Orders",
-			route: "/order",
+			route: "/orders",
 			active: true
 		},
 		{
 			id: 3,
-			name: "Stock",
-			route: "/stock",
+			name: "Products",
+			route: "/products",
+			active: false
+		},
+		{
+			id: 4,
+			name: "Test Client",
+			route: "/testClient",
 			active: false
 		}
 	]);

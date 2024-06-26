@@ -1,6 +1,6 @@
 import { OrderTable } from "./OrderTable";
 
-const Order = () => {
+const Orders = () => {
 	return (
 		<div className="p-10">
 			<OrderTable />
@@ -8,4 +8,4 @@ const Order = () => {
 	);
 };
 
-export default Order;
+export default Orders;
