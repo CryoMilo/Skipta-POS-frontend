@@ -1,9 +1,13 @@
+"use client";
+
 import { type Sidebar } from "@/types/ui";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import Link from "next/link";
+import { useState } from "react";
 
 const Sidebar = () => {
-	const sidebarElements: Sidebar[] = [
+	const [sidebarElements, setSidebarElements] = useState<Sidebar[]>([
 		{
 			id: 1,
 			name: "Dashboard",
@@ -11,21 +15,31 @@ const Sidebar = () => {
 			active: false
 		},
 		{
-			id: 1,
+			id: 2,
 			name: "Orders",
-			route: "/kitchen",
+			route: "/order",
 			active: true
 		},
 		{
-			id: 1,
+			id: 3,
 			name: "Stock",
 			route: "/stock",
 			active: false
 		}
-	];
+	]);
+
+	const changeActiveLink = (id: number) => {
+		setSidebarElements((prevElements) =>
+			prevElements.map((element) =>
+				element.id === id
+					? { ...element, active: true }
+					: { ...element, active: false }
+			)
+		);
+	};
 
 	return (
-		<div className="bg-secondary m-3 min-h-[100vh] w-[15%] rounded-xl border-[1px]">
+		<div className="m-3 min-h-[100vh] w-[15%] rounded-xl border-[1px] bg-secondary">
 			<div className="mb-9 mt-4 flex w-full justify-center">
 				<Image
 					className="pt-4"
@@ -36,13 +50,15 @@ const Sidebar = () => {
 				/>
 			</div>
 			<div className="sh flex flex-col gap-4 px-4">
-				{sidebarElements.map((element: Sidebar) => (
-					<Button
-						className={`w-full ${element.active ? "shadow-md" : ""}`}
-						variant={element.active ? "default" : "secondary"}
-						key={element.id}>
-						{element.name}
-					</Button>
+				{sidebarElements.map(({ id, route, active, name }) => (
+					<Link key={id} href={route}>
+						<Button
+							onClick={() => changeActiveLink(id)}
+							className={`w-full ${active ? "shadow-md" : ""}`}
+							variant={active ? "default" : "secondary"}>
+							{name}
+						</Button>
+					</Link>
 				))}
 			</div>
 		</div>
