@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -6,11 +8,23 @@ import {
 	CardHeader,
 	CardTitle
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { TextField } from "@/components/formInputs/TextField";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { type FormValues } from "@/types/form";
+import { CheckboxField } from "@/components/formInputs/CheckboxField";
 
 export default function TestClient() {
+	const { handleSubmit, control } = useForm<FormValues>({
+		defaultValues: {
+			customerName: "",
+			menu: "",
+			soup: false,
+			vege: false
+		}
+	});
+	const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+
 	return (
 		<Card className="mx-auto max-w-sm">
 			<CardHeader>
@@ -18,15 +32,24 @@ export default function TestClient() {
 				<CardDescription>Create testing order</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<div className="grid gap-4">
+				<form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
 					<div className="grid gap-2">
 						<Label htmlFor="menu">Menu</Label>
-						<Input id="menu" type="text" placeholder="Pad Kra Pao" required />
+						<TextField
+							control={control}
+							name="menu"
+							id="menu"
+							type="text"
+							placeholder="Pad Kra Pao"
+							required
+						/>
 					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="customerName">Customer Name</Label>
-						<Input
+						<TextField
+							control={control}
 							id="customerName"
+							name="customerName"
 							type="text"
 							placeholder="Damian"
 							required
@@ -35,7 +58,7 @@ export default function TestClient() {
 					<Label htmlFor="customerName">Add-Ons</Label>
 					<div className="grid grid-cols-2 gap-4">
 						<div className="flex gap-2">
-							<Checkbox id="soup" />
+							<CheckboxField id="soup" name="soup" control={control} />
 							<label
 								htmlFor="soup"
 								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -43,7 +66,7 @@ export default function TestClient() {
 							</label>
 						</div>
 						<div className="flex gap-2">
-							<Checkbox id="vegetables" />
+							<CheckboxField id="vege" name="vege" control={control} />
 							<label
 								htmlFor="vegetables"
 								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -57,7 +80,7 @@ export default function TestClient() {
 					<Button variant="outline" className="w-full">
 						Cancel
 					</Button>
-				</div>
+				</form>
 			</CardContent>
 		</Card>
 	);
