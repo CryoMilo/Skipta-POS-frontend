@@ -13,6 +13,7 @@ import { TextField } from "@/components/formInputs/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { type FormValues } from "@/types/form";
 import { CheckboxField } from "@/components/formInputs/CheckboxField";
+import { createOrder } from "@/services/orders";
 
 export default function TestClient() {
 	const { handleSubmit, control } = useForm<FormValues>({
@@ -23,7 +24,25 @@ export default function TestClient() {
 			vege: false
 		}
 	});
-	const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+	const onSubmit: SubmitHandler<FormValues> = async (data) => {
+		const currentDate = new Date().toISOString();
+		try {
+			const id: string = crypto.randomUUID();
+
+			const createdOrder = await createOrder({
+				id,
+				customerName: data.customerName,
+				menuName: data.menu,
+				vege: data.vege,
+				soup: data.soup,
+				orderCompleted: false,
+				createdAt: currentDate
+			});
+			console.log("Order created successfully:", createdOrder);
+		} catch (error) {
+			console.error("Failed to create order:");
+		}
+	};
 
 	return (
 		<Card className="mx-auto max-w-sm">
