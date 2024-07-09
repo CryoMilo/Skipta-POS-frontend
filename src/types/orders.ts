@@ -1,5 +1,5 @@
 export interface Order {
-	id: string;
+	_id: string;
 	customerName: string;
 	menuName: string;
 	vege: boolean;

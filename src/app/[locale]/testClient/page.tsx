@@ -27,10 +27,10 @@ export default function TestClient() {
 	const onSubmit: SubmitHandler<FormValues> = async (data) => {
 		const currentDate = new Date().toISOString();
 		try {
-			const id: string = crypto.randomUUID();
+			const _id: string = crypto.randomUUID();
 
 			const createdOrder = await createOrder({
-				id,
+				_id,
 				customerName: data.customerName,
 				menuName: data.menu,
 				vege: data.vege,

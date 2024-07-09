@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -18,33 +17,54 @@ import {
 } from "@/components/ui/table";
 import { Order } from "@/types/orders";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getOrderList } from "@/services/orders";
+import { getOrderList, setOrderCompletion } from "@/services/orders";
+import { revalidateOrders } from "../actions";
+import { Button } from "@/components/ui/button";
 
-const OrderTableRow = ({ order }: { order: Order }) => (
-	<TableRow>
-		<TableCell className="font-medium">
-			<Avatar>
-				<AvatarImage src="https://github.com/shadcn.png" />
-				<AvatarFallback>V</AvatarFallback>
-			</Avatar>
-		</TableCell>
-		<TableCell className="font-medium">{order.menuName}</TableCell>
-		<TableCell>{order.customerName}</TableCell>
-		<TableCell>
-			<Badge variant="outline">{order.vege ? "Yes" : "No"}</Badge>
-		</TableCell>
-		<TableCell>
-			<Badge variant="outline">{order.soup ? "Yes" : "No"}</Badge>
-		</TableCell>
-		<TableCell className="hidden md:table-cell">
-			{new Date(order.createdAt).toLocaleString()}
-		</TableCell>
-		<TableCell>{order.orderCompleted ? "Completed" : "Pending"}</TableCell>
-		<TableCell>
-			<Button>Completed</Button>
-		</TableCell>
-	</TableRow>
-);
+interface OrderTableRowProps {
+	order: Order;
+}
+
+const OrderTableRow: React.FC<OrderTableRowProps> = ({ order }) => {
+	async function updateCompletion() {
+		"use server";
+
+		await setOrderCompletion(order._id, order);
+		await revalidateOrders();
+	}
+
+	return (
+		<TableRow>
+			<TableCell className="font-medium">
+				<Avatar>
+					<AvatarImage src="https://github.com/shadcn.png" />
+					<AvatarFallback>V</AvatarFallback>
+				</Avatar>
+			</TableCell>
+			<TableCell className="font-medium">{order.menuName}</TableCell>
+			<TableCell>{order.customerName}</TableCell>
+			<TableCell>
+				<Badge variant="outline">{order.vege ? "Yes" : "No"}</Badge>
+			</TableCell>
+			<TableCell>
+				<Badge variant="outline">{order.soup ? "Yes" : "No"}</Badge>
+			</TableCell>
+			<TableCell className="hidden md:table-cell">
+				{new Date(order.createdAt).toLocaleString()}
+			</TableCell>
+			<TableCell>{order.orderCompleted ? "Completed" : "Pending"}</TableCell>
+			<TableCell>
+				{order.orderCompleted ? (
+					""
+				) : (
+					<form action={updateCompletion}>
+						<Button type="submit">Completed</Button>
+					</form>
+				)}
+			</TableCell>
+		</TableRow>
+	);
+};
 
 export const OrderTable = async () => {
 	const data = await getOrderList();
@@ -79,13 +99,13 @@ export const OrderTable = async () => {
 					</TableHeader>
 					<TableBody>
 						{orders.map((order: Order) => (
-							<OrderTableRow key={order.id} order={order} />
+							<OrderTableRow key={order._id} order={order} />
 						))}
 					</TableBody>
 				</Table>
 			</CardContent>
 			<CardFooter>
-				<div className="text-muted-foreground text-xs">
+				<div className="text-xs text-muted-foreground">
 					Showing <strong>1-10</strong> of <strong>32</strong> products
 				</div>
 			</CardFooter>
