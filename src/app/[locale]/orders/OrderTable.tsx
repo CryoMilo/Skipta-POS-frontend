@@ -30,7 +30,7 @@ const OrderTableRow: React.FC<OrderTableRowProps> = ({ order }) => {
 		"use server";
 
 		await setOrderCompletion(order._id, order);
-		await revalidateOrders();
+		revalidateOrders();
 	}
 
 	return (

@@ -14,8 +14,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { type FormValues } from "@/types/form";
 import { CheckboxField } from "@/components/formInputs/CheckboxField";
 import { createOrder } from "@/services/orders";
+import { revalidateOrders } from "../actions";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function TestClient() {
+	const { toast } = useToast();
 	const { handleSubmit, control } = useForm<FormValues>({
 		defaultValues: {
 			customerName: "",
@@ -39,6 +42,10 @@ export default function TestClient() {
 				createdAt: currentDate
 			});
 			console.log("Order created successfully:", createdOrder);
+			revalidateOrders();
+			toast({
+				title: "Order Created!"
+			});
 		} catch (error) {
 			console.error("Failed to create order:");
 		}

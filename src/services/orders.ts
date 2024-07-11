@@ -1,11 +1,12 @@
 import { Order } from "@/types/orders";
 import { revalidatePath } from "next/cache";
+import { TAG_ORDERS } from "./tags";
 
-const url = "https://skipta-pos-backend.onrender.com/api/order";
+const url = `${process.env.NEXT_PUBLIC_NODE_SKIPTA_BACKEND_URL}/order`;
 
 export const getOrderList = async () => {
 	const res = await fetch(url, {
-		next: { tags: ["orders"] }
+		next: { tags: [TAG_ORDERS] }
 	});
 
 	if (!res.ok) {
@@ -23,7 +24,7 @@ export const createOrder = async (orderData: Order) => {
 			// Add any additional headers as needed
 		},
 		body: JSON.stringify(orderData),
-		next: { tags: ["orders"] }
+		next: { tags: [TAG_ORDERS] }
 	};
 
 	const res = await fetch(url, requestOptions);
@@ -40,10 +41,9 @@ export const setOrderCompletion = async (orderId: string, orderData: Order) => {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json"
-			// Add any additional headers as needed
 		},
 		body: JSON.stringify({ ...orderData, orderCompleted: true }),
-		next: { tags: ["orders"] }
+		next: { tags: [TAG_ORDERS] }
 	};
 
 	const res = await fetch(`${url}/${orderId}`, requestOptions);
@@ -52,7 +52,7 @@ export const setOrderCompletion = async (orderId: string, orderData: Order) => {
 		throw new Error("Failed to update order");
 	}
 
-	await revalidatePath("/orders", "page");
+	revalidatePath("/orders", "page");
 
 	return res.json();
 };
