@@ -4,15 +4,17 @@ import { type Sidebar } from "@/types/ui";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	LayoutDashboard,
 	PackageSearch,
 	Plus,
 	ShoppingCart
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
+	const pathname = usePathname();
 	const [sidebarElements, setSidebarElements] = useState<Sidebar[]>([
 		{
 			id: 1,
@@ -44,15 +46,20 @@ const Sidebar = () => {
 		}
 	]);
 
-	const changeActiveLink = (id: number) => {
+	const changeActiveLink = (route: string) => {
 		setSidebarElements((prevElements) =>
 			prevElements.map((element) =>
-				element.id === id
+				element.route === route
 					? { ...element, active: true }
 					: { ...element, active: false }
 			)
 		);
 	};
+
+	useEffect(() => {
+		const strippedPathname = pathname.replace(/^\/[a-z]{2}\//, "/");
+		changeActiveLink(strippedPathname);
+	}, [pathname]);
 
 	return (
 		<div className="m-3 min-h-[100vh] w-56 min-w-28 rounded-xl border-[1px] bg-secondary">
@@ -69,7 +76,7 @@ const Sidebar = () => {
 				{sidebarElements.map(({ id, route, active, name, icon }) => (
 					<Link key={id} href={route}>
 						<Button
-							onClick={() => changeActiveLink(id)}
+							onClick={() => changeActiveLink(route)}
 							className={`flex w-full justify-center gap-2 xl:justify-start ${active ? "shadow-md" : ""}`}
 							variant={active ? "default" : "secondary"}>
 							{icon}
