@@ -12,6 +12,7 @@ import {
 	ShoppingCart
 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { navblacklist } from "@/constants/nav";
 
 const Sidebar = () => {
 	const pathname = usePathname();
@@ -56,39 +57,36 @@ const Sidebar = () => {
 		);
 	};
 
-	const strippedPathname = pathname.replace(/^\/[a-z]{2}\//, "/");
-
 	useEffect(() => {
+		const strippedPathname = pathname.replace(/^\/[a-z]{2}\//, "/");
 		changeActiveLink(strippedPathname);
-	}, [pathname, strippedPathname]);
+	}, [pathname]);
 
-	return (
-		strippedPathname !== "/login" && (
-			<div className="m-3 min-h-[100vh] w-56 min-w-28 rounded-xl border-[1px] bg-secondary">
-				<div className="mb-9 mt-4 flex w-full justify-center">
-					<Image
-						className="pt-4"
-						width={80}
-						height={80}
-						src="/icons/SkiptaLogo.svg"
-						alt="main logo"
-					/>
-				</div>
-				<div className="flex flex-col gap-4 px-4">
-					{sidebarElements.map(({ id, route, active, name, icon }) => (
-						<Link key={id} href={route}>
-							<Button
-								onClick={() => changeActiveLink(route)}
-								className={`flex w-full justify-center gap-2 xl:justify-start ${active ? "shadow-md" : ""}`}
-								variant={active ? "default" : "secondary"}>
-								{icon}
-								<span className="hidden xl:inline">{name}</span>
-							</Button>
-						</Link>
-					))}
-				</div>
+	return navblacklist.some((link) => link === pathname) ? null : (
+		<div className="m-3 min-h-[100vh] w-56 min-w-28 rounded-xl border-[1px] bg-secondary">
+			<div className="mb-9 mt-4 flex w-full justify-center">
+				<Image
+					className="pt-4"
+					width={80}
+					height={80}
+					src="/icons/SkiptaLogo.svg"
+					alt="main logo"
+				/>
 			</div>
-		)
+			<div className="flex flex-col gap-4 px-4">
+				{sidebarElements.map(({ id, route, active, name, icon }) => (
+					<Link key={id} href={route}>
+						<Button
+							onClick={() => changeActiveLink(route)}
+							className={`flex w-full justify-center gap-2 xl:justify-start ${active ? "shadow-md" : ""}`}
+							variant={active ? "default" : "secondary"}>
+							{icon}
+							<span className="hidden xl:inline">{name}</span>
+						</Button>
+					</Link>
+				))}
+			</div>
+		</div>
 	);
 };
 
