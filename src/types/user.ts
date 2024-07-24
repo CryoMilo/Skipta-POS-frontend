@@ -7,6 +7,11 @@ export interface User {
 	createdAt: string; // ISO 8601 date string
 }
 
+export interface LoginCredentials {
+	email: string;
+	password: string;
+}
+
 export interface UserFormValues {
 	firstName: string;
 	lastName: string;

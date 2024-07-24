@@ -1,14 +1,56 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useToast } from "@/components/ui/use-toast";
+import { revalidateUsers } from "../actions";
+import { TextField } from "@/components/formInputs/TextField";
+import { FormValues } from "@/types/form";
+import { loginUser } from "@/services/users";
 
 export const Login = () => {
+	const { toast } = useToast();
+	const { handleSubmit, control } = useForm<FormValues>({
+		defaultValues: {
+			firstName: "",
+			lastName: "",
+			email: "",
+			password: ""
+		}
+	});
+	const onSubmit: SubmitHandler<FormValues> = async (data) => {
+		try {
+			const checkedUser = await loginUser({
+				email: data.email,
+				password: data.password
+			});
+			console.log("User Login successful:", checkedUser);
+			revalidateUsers();
+
+			if (Object.hasOwn(checkedUser, "error")) {
+				toast({
+					title: checkedUser.error
+				});
+			} else
+				toast({
+					title: "User Login Successful!"
+				});
+		} catch (error) {
+			toast({
+				title: "An error occurred"
+			});
+		}
+	};
+
 	return (
 		<div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-			<div className="flex items-center justify-center py-12">
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				className="flex items-center justify-center py-12">
 				<div className="mx-auto grid w-[350px] gap-6">
 					<div className="grid gap-2 text-center">
 						<h1 className="text-3xl font-bold">Login</h1>
@@ -16,7 +58,9 @@ export const Login = () => {
 					<div className="grid gap-4">
 						<div className="grid gap-2">
 							<Label htmlFor="email">Email</Label>
-							<Input
+							<TextField
+								name="email"
+								control={control}
 								id="email"
 								type="email"
 								placeholder="m@example.com"
@@ -32,14 +76,20 @@ export const Login = () => {
 									Forgot your password?
 								</Link>
 							</div>
-							<Input id="password" type="password" required />
+							<TextField
+								name="password"
+								control={control}
+								id="password"
+								type="password"
+								required
+							/>
 						</div>
 						<Button type="submit" className="w-full">
 							Login
 						</Button>
-						<Button variant="outline" className="w-full">
+						{/* <Button variant="outline" className="w-full">
 							Login with Google
-						</Button>
+						</Button> */}
 					</div>
 					<div className="mt-4 text-center text-sm">
 						Don&apos;t have an account?{" "}
@@ -48,7 +98,7 @@ export const Login = () => {
 						</Link>
 					</div>
 				</div>
-			</div>
+			</form>
 			<div className="hidden lg:block">
 				<Image
 					src="/images/login-illustration.svg"
