@@ -11,11 +11,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { TextField } from "@/components/formInputs/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { type FormValues } from "@/types/form";
 import { CheckboxField } from "@/components/formInputs/CheckboxField";
 import { createOrder } from "@/services/orders";
 import { revalidateOrders } from "../actions";
 import { useToast } from "@/components/ui/use-toast";
+import { FormValues } from "@/types/form";
 
 export default function TestClient() {
 	const { toast } = useToast();
@@ -47,7 +47,7 @@ export default function TestClient() {
 				title: "Order Created!"
 			});
 		} catch (error) {
-			console.error("Failed to create order:");
+			console.error("Failed to create order");
 		}
 	};
 

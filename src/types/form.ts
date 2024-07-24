@@ -1,6 +1,4 @@
-export interface FormValues {
-	customerName: string;
-	menu: string;
-	soup: boolean;
-	vege: boolean;
-}
+import { OrderFormValues } from "./orders";
+import { UserFormValues } from "./user";
+
+export interface FormValues extends UserFormValues, OrderFormValues {}
