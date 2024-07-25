@@ -46,6 +46,7 @@ export const Signup = () => {
 
 			if (Object.hasOwn(createdUser, "error")) {
 				toast({
+					variant: "destructive",
 					title: createdUser.error
 				});
 			} else

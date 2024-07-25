@@ -33,6 +33,7 @@ export const Login = () => {
 
 			if (Object.hasOwn(checkedUser, "error")) {
 				toast({
+					variant: "destructive",
 					title: checkedUser.error
 				});
 			} else
@@ -41,7 +42,7 @@ export const Login = () => {
 				});
 		} catch (error) {
 			toast({
-				title: "An error occurred"
+				title: "An error occurred!"
 			});
 		}
 	};
