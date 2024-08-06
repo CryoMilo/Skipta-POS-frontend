@@ -11,13 +11,13 @@ import { revalidateUsers } from "../actions";
 import { TextField } from "@/components/formInputs/TextField";
 import { FormValues } from "@/types/form";
 import { loginUser } from "@/services/users";
+import { useRouter } from "next/navigation";
 
 export const Login = () => {
 	const { toast } = useToast();
+	const router = useRouter();
 	const { handleSubmit, control } = useForm<FormValues>({
 		defaultValues: {
-			firstName: "",
-			lastName: "",
 			email: "",
 			password: ""
 		}
@@ -36,12 +36,15 @@ export const Login = () => {
 					variant: "destructive",
 					title: checkedUser.error
 				});
-			} else
+			} else {
 				toast({
 					title: "User Login Successful!"
 				});
+				router.push("/dashboard", { scroll: true });
+			}
 		} catch (error) {
 			toast({
+				variant: "destructive",
 				title: "An error occurred!"
 			});
 		}

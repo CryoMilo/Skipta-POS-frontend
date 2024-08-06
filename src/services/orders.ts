@@ -6,7 +6,8 @@ const url = `${process.env.NEXT_PUBLIC_NODE_SKIPTA_BACKEND_URL}/order`;
 
 export const getOrderList = async () => {
 	const res = await fetch(url, {
-		next: { tags: [TAG_ORDERS] }
+		next: { tags: [TAG_ORDERS] },
+		credentials: "include"
 	});
 
 	if (!res.ok) {
@@ -21,7 +22,6 @@ export const createOrder = async (orderData: Order) => {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
-			// Add any additional headers as needed
 		},
 		body: JSON.stringify(orderData),
 		next: { tags: [TAG_ORDERS] }

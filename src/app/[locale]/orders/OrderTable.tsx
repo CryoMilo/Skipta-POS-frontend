@@ -98,9 +98,10 @@ export const OrderTable = async () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{orders.map((order: Order) => (
-							<OrderTableRow key={order._id} order={order} />
-						))}
+						{/* {orders.length !== 0 &&
+							orders.map((order: Order) => (
+								<OrderTableRow key={order._id} order={order} />
+							))} */}
 					</TableBody>
 				</Table>
 			</CardContent>
