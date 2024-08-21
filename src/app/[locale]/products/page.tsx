@@ -10,14 +10,14 @@ const Products = async () => {
 	console.log("MY PRODUCTS", products);
 
 	// Convert Buffer to Base64 string
-	const base64Image = Buffer.from(products[0].image.data).toString("base64");
-	const imageSrc = `data:${products[0].contentType};base64,${base64Image}`;
+	const base64Image = Buffer.from(products[1].image.data).toString("base64");
+	const imageSrc = `data:${products[1].contentType};base64,${base64Image}`;
 
 	return (
 		<div>
 			<Image
 				src={imageSrc}
-				alt={products[0].productName}
+				alt={products[1].productName}
 				width={1920}
 				height={1080}
 				className="h-full w-full p-40"
