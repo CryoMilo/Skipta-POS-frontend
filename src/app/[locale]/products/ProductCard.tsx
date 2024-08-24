@@ -15,15 +15,21 @@ import { EditDataForm } from "./EditDataForm";
 import { Plus } from "lucide-react";
 // import { useParams } from "next/navigation";
 
-type CardProps = React.ComponentProps<typeof Card>;
-
-export async function ProductCard({ className, ...props }: CardProps) {
+export const ProductCard = async () => {
 	// const [products, setProducts] = useState<Product[]>([]);
 	// const { id } = useParams();
 	//fetch product data
 	const data = await getProductList();
 	const products: Product[] = data;
 	console.log(products);
+
+	// 	const fetchProducts = async () => {
+	// 		const data = await getProductList();
+	// 		setProducts(data);
+	// 	};
+	// 	fetchProducts();
+
+	// console.log(products);
 
 	// const handleUpdateProduct = async (updatedProduct: Product) => {
 	// 	if (typeof id === "string") {
@@ -85,4 +91,4 @@ export async function ProductCard({ className, ...props }: CardProps) {
 			</div>
 		</div>
 	);
-}
+};
