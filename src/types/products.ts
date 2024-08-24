@@ -7,7 +7,8 @@ export interface Product {
 	_id: string;
 	productName: string;
 	description: string;
-	vege: boolean;
+	taste: boolean;
+	ingredients: string;
 	price: number;
 	image: ImageBuffer;
 	contentType: string;
