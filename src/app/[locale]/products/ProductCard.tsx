@@ -25,15 +25,6 @@ export async function ProductCard({ className, ...props }: CardProps) {
 	const products: Product[] = data;
 	console.log(products);
 
-	// useEffect(() => {
-	// 	const fetchProducts = async () => {
-	// 		const data = await getProductList();
-	// 		setProducts(data);
-	// 	};
-	// 	fetchProducts();
-	// }, []);
-	// console.log(products);
-
 	// const handleUpdateProduct = async (updatedProduct: Product) => {
 	// 	if (typeof id === "string") {
 	// 		try {
