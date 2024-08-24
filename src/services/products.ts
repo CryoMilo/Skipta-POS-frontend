@@ -2,6 +2,7 @@ import { TAG_PRODUCTS } from "./tags";
 import { Product } from "@/types/products";
 
 const url = `${process.env.NEXT_PUBLIC_NODE_SKIPTA_BACKEND_URL}/product`;
+console.log(url);
 
 export const getProductList = async () => {
 	const res = await fetch(url, {
@@ -34,3 +35,23 @@ export const createProduct = async (productData: Product) => {
 
 	return res.json();
 };
+
+// export const UpdateProduct = async (productData: Product) => {
+// 	const ProductID = `${url}/${productData._id}`;
+// 	const requestOptions = {
+// 		method: "PUT",
+// 		headers: {
+// 			"Content-Type": "application/json"
+// 		},
+// 		body: JSON.stringify(productData),
+// 		next: { tags: [TAG_PRODUCTS] }
+// 	};
+
+// 	const res = await fetch(ProductID, requestOptions);
+
+// 	if (!res.ok) {
+// 		throw new Error("Failed to create order");
+// 	}
+
+// 	return res.json();
+// };
