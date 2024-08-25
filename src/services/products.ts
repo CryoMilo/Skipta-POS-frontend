@@ -30,6 +30,30 @@ export const getOneProduct = async (slug: string) => {
 	return res.json();
 };
 
+export const EditOneProduct = async (
+	productData: Partial<Product>,
+	productID: string
+) => {
+	// const promise: string = `${url}/${productData._id}`;
+	const data = { ...productData, _id: productID };
+	const requestOptions = {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(data),
+		next: { tags: [TAG_PRODUCTS] }
+	};
+
+	const res = await fetch(url, requestOptions);
+
+	if (!res.ok) {
+		throw new Error("Failed to create order");
+	}
+
+	return res.json();
+};
+
 export const createProduct = async (productData: Product) => {
 	const requestOptions = {
 		method: "POST",
@@ -48,23 +72,3 @@ export const createProduct = async (productData: Product) => {
 
 	return res.json();
 };
-
-// export const UpdateProduct = async (productData: Product) => {
-// 	const ProductID = `${url}/${productData._id}`;
-// 	const requestOptions = {
-// 		method: "PUT",
-// 		headers: {
-// 			"Content-Type": "application/json"
-// 		},
-// 		body: JSON.stringify(productData),
-// 		next: { tags: [TAG_PRODUCTS] }
-// 	};
-
-// 	const res = await fetch(ProductID, requestOptions);
-
-// 	if (!res.ok) {
-// 		throw new Error("Failed to create order");
-// 	}
-
-// 	return res.json();
-// };

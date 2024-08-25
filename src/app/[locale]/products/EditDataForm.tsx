@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -11,103 +12,97 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-// import { useState } from "react";
 import { Product } from "@/types/products";
-// import { Buffer } from "buffer";
-// import { UpdateProduct } from "@/services/products";
+import { useState } from "react";
+import { EditOneProduct } from "@/services/products";
 
 type EditDataProps = {
 	product: Product;
-	// id: string; // Product ID
-	// onSubmit: (product: Product) => void; // Callback to handle submission
 };
 
 export function EditDataForm({ product }: EditDataProps) {
-	// const [productName, setProductName] = useState(product?.productName || "");
-	// const [description, setDescription] = useState(product?.description || "");
-	// const [price, setPrice] = useState(product?.price?.toString() || "");
+	const [productName, setProductName] = useState(product?.productName || "");
+	const [description, setDescription] = useState(product?.description || "");
+	const [price, setPrice] = useState(product?.price?.toString() || "");
 
 	const base64Image = Buffer.from(product.image.data).toString("base64");
 	const imageSrc = `data:${product.contentType};base64,${base64Image}`;
 
-	// const handleSubmit = (e: React.FormEvent) => {
-	// 	e.preventDefault();
-	// 	const updatedProduct: Product = {
-	// 		...product,
-	// 		_id: id,
-	// 		productName,
-	// 		description,
-	// 		price: parseFloat(price) // Convert string to number
-	// 	};
-	// 	UpdateProduct(updatedProduct);
-	// };
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		const updatedProduct: Partial<Product> = {
+			...product,
+			productName,
+			description,
+			price: parseFloat(price) // Convert string to number
+		};
+		console.log("updaeDate", updatedProduct);
+		const update = await EditOneProduct(updatedProduct, product._id);
+		console.log("apiEdiProdcut", update);
+	};
 
 	return (
 		<Dialog>
-			<DialogTrigger>
-				<Button
-					variant="outline"
-					className="w-full rounded-full bg-black text-white">
-					Edit
-				</Button>
+			<DialogTrigger className="w-full rounded-full bg-black p-2 font-bold text-white hover:bg-white hover:text-yellow-600">
+				<div>Edit</div>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Edit Menu</DialogTitle>
 					<DialogDescription>
-						Make changes to your Menu here. Click save when you're done.
+						Make changes to your Menu here. Click save when you are done.
 					</DialogDescription>
 				</DialogHeader>
-				{/* <form onSubmit={handleSubmit}> */}
-				<div className="grid gap-4 py-4">
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Image
-							src={imageSrc}
-							alt=""
-							width={300}
-							height={300}
-							className="h-full w-full"
-						/>
+				<form onSubmit={handleSubmit}>
+					<div className="grid gap-4 py-4">
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Image
+								src={imageSrc}
+								alt=""
+								width={300}
+								height={300}
+								className=" h-[100px] w-[100px]"
+							/>
+						</div>
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="name" className="text-right">
+								Menu Name
+							</Label>
+							<Input
+								id="name"
+								value={productName}
+								onChange={(e) => setProductName(e.target.value)}
+								className="col-span-3"
+							/>
+						</div>
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="price" className="text-right">
+								Price
+							</Label>
+							<Input
+								id="price"
+								type="number"
+								value={price}
+								className="col-span-3"
+								onChange={(e) => setPrice(e.target.value)}
+							/>
+						</div>
+						<div className="grid grid-cols-4 items-center gap-4">
+							<Label htmlFor="description" className="text-right">
+								Description
+							</Label>
+							<Input
+								id="description"
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								className="col-span-3"
+							/>
+						</div>
 					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="name" className="text-right">
-							Menu Name
-						</Label>
-						<Input
-							id="name"
-							value={product.productName}
-							// onChange={(e) => setProductName(e.target.value)}
-							className="col-span-3"
-						/>
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="price" className="text-right">
-							Price
-						</Label>
-						<Input
-							id="price"
-							type="number"
-							value={product.price}
-							className="col-span-3"
-							// onChange={(e) => setPrice(e.target.value)}
-						/>
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="description" className="text-right">
-							Description
-						</Label>
-						<Input
-							id="description"
-							value={product.description}
-							// onChange={(e) => setDescription(e.target.value)}
-							className="col-span-3"
-						/>
-					</div>
-				</div>
-				<DialogFooter>
-					<Button type="submit">Save changes</Button>
-				</DialogFooter>
-				{/* </form> */}
+					<DialogFooter>
+						<Button type="submit">Save changes</Button>
+					</DialogFooter>
+				</form>
 			</DialogContent>
 		</Dialog>
 	);

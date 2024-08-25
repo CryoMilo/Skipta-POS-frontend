@@ -13,42 +13,14 @@ import { getProductList } from "@/services/products";
 import { Product } from "@/types/products";
 import { EditDataForm } from "./EditDataForm";
 import { Plus } from "lucide-react";
-// import { useParams } from "next/navigation";
 
 export const ProductCard = async () => {
-	// const [products, setProducts] = useState<Product[]>([]);
-	// const { id } = useParams();
-	//fetch product data
 	const data = await getProductList();
 	const products: Product[] = data;
-	console.log(products);
-
-	// 	const fetchProducts = async () => {
-	// 		const data = await getProductList();
-	// 		setProducts(data);
-	// 	};
-	// 	fetchProducts();
-
-	// console.log(products);
-
-	// const handleUpdateProduct = async (updatedProduct: Product) => {
-	// 	if (typeof id === "string") {
-	// 		try {
-	// 			await UpdateProduct(updatedProduct);
-	// 			// Update local state with the new product list
-	// 			const data = await getProductList();
-	// 			setProducts(data);
-	// 		} catch (error) {
-	// 			console.error("Failed to update product:", error);
-	// 		}
-	// 	} else {
-	// 		console.error("Invalid product ID:", id);
-	// 	}
-	// };
 
 	return (
-		<div>
-			<div className="flex gap-2">
+		<div className="">
+			<div className="flex flex-col gap-2 lg:flex-row">
 				{products.map((product, index) => {
 					const base64Image = Buffer.from(product.image.data).toString(
 						"base64"
@@ -56,7 +28,7 @@ export const ProductCard = async () => {
 					const imageSrc = `data:${product.contentType};base64,${base64Image}`;
 
 					return (
-						<Card key={index} className="rounded-3xl bg-primary">
+						<Card key={index} className="m-auto rounded-3xl bg-primary">
 							<CardContent className="flex flex-col items-center justify-center p-2">
 								<Image
 									src={imageSrc}
@@ -81,7 +53,7 @@ export const ProductCard = async () => {
 					);
 				})}
 			</div>
-			<div className="absolute bottom-0 right-0 m-6 h-[60px] w-[60px] overflow-hidden rounded-full transition-all duration-500 ease-in-out hover:w-[150px] hover:bg-black">
+			<div className=" static bottom-0 right-0 m-6 h-[60px] w-[60px] overflow-hidden rounded-full transition-all duration-500 ease-in-out hover:w-[150px] hover:bg-black lg:absolute">
 				<div className="flex items-center">
 					<Button className="h-[60px] w-[60px] rounded-full transition-transform duration-300 hover:rotate-180">
 						<Plus className="min-h-6 min-w-6" />
