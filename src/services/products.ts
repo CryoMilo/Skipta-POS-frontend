@@ -17,6 +17,19 @@ export const getProductList = async () => {
 	return res.json();
 };
 
+export const getOneProduct = async (slug: string) => {
+	const res = await fetch(`${url}/${slug}`, {
+		next: { tags: [TAG_PRODUCTS] },
+		credentials: "include"
+	});
+
+	if (!res.ok) {
+		throw new Error("Failed to fetch data");
+	}
+
+	return res.json();
+};
+
 export const createProduct = async (productData: Product) => {
 	const requestOptions = {
 		method: "POST",
