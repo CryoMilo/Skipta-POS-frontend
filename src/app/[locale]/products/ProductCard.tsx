@@ -13,6 +13,7 @@ import { getProductList } from "@/services/products";
 import { Product } from "@/types/products";
 import { EditDataForm } from "./EditDataForm";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export const ProductCard = async () => {
 	const data = await getProductList();
@@ -54,12 +55,14 @@ export const ProductCard = async () => {
 				})}
 			</div>
 			<div className=" static bottom-0 right-0 m-6 h-[60px] w-[60px] overflow-hidden rounded-full transition-all duration-500 ease-in-out hover:w-[150px] hover:bg-black lg:absolute">
-				<div className="flex items-center">
-					<Button className="h-[60px] w-[60px] rounded-full transition-transform duration-300 hover:rotate-180">
-						<Plus className="min-h-6 min-w-6" />
-					</Button>
-					<span className="ml-[10px] text-xl text-white">Create</span>
-				</div>
+				<Link href="./products/create">
+					<div className="flex items-center">
+						<Button className="h-[60px] w-[60px] rounded-full transition-transform duration-300 hover:rotate-180">
+							<Plus className="min-h-6 min-w-6" />
+						</Button>
+						<span className="ml-[10px] text-xl text-white">Create</span>
+					</div>
+				</Link>
 			</div>
 		</div>
 	);

@@ -55,14 +55,17 @@ export function EditDataForm({ product }: EditDataProps) {
 				</DialogHeader>
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-4 py-4">
-						<div className="grid grid-cols-4 items-center gap-4">
+						<div className="m-auto grid grid-cols-2 gap-4">
 							<Image
 								src={imageSrc}
 								alt=""
 								width={300}
 								height={300}
-								className=" h-[100px] w-[100px]"
+								className=" h-[150px] w-[200px]"
 							/>
+							<Button variant="secondary" className="m-auto w-[100px]">
+								Edit Image
+							</Button>
 						</div>
 						<div className="grid grid-cols-4 items-center gap-4">
 							<Label htmlFor="name" className="text-right">
