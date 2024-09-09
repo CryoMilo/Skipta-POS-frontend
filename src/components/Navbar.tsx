@@ -6,7 +6,8 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { navblacklist } from "@/constants/nav";
 import Image from "next/image";
-import { ChevronLeftIcon } from "lucide-react";
+
+import BackButton from "./BackButton";
 
 const Navbar = () => {
 	const pathname = usePathname();
@@ -21,10 +22,7 @@ const Navbar = () => {
 					src="/icons/SkiptaLogo.svg"
 					alt="main logo"
 				/>
-				<div className="hidden gap-2 md:flex">
-					<ChevronLeftIcon className="text-primary" />
-					<span>Back</span>
-				</div>
+				<BackButton />
 			</div>
 
 			<div className="flex gap-3">
