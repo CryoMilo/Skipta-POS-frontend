@@ -7,7 +7,8 @@ console.log(url);
 export const getProductList = async () => {
 	const res = await fetch(url, {
 		next: { tags: [TAG_PRODUCTS] },
-		credentials: "include"
+		credentials: "include",
+		cache: "no-cache"
 	});
 
 	if (!res.ok) {
@@ -20,7 +21,8 @@ export const getProductList = async () => {
 export const getOneProduct = async (slug: string) => {
 	const res = await fetch(`${url}/${slug}`, {
 		next: { tags: [TAG_PRODUCTS] },
-		credentials: "include"
+		credentials: "include",
+		cache: "no-cache"
 	});
 
 	if (!res.ok) {

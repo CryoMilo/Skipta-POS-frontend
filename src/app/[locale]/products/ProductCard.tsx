@@ -15,7 +15,7 @@ import Link from "next/link";
 import { convertToBase64 } from "@/utils/convertToBase64";
 
 const AddButton = () => (
-	<div className="fixed bottom-0 right-0 m-6 h-[60px] w-[60px] overflow-hidden rounded-full transition-all duration-500 ease-in-out hover:w-[150px] hover:bg-black">
+	<div className="m-6 h-[60px] w-[60px] overflow-hidden rounded-full transition-all duration-500 ease-in-out hover:w-[150px] hover:bg-black">
 		<Link href="./products/create">
 			<div className="flex items-center">
 				<Button className="h-[60px] w-[60px] rounded-full transition-transform duration-300 hover:rotate-180">
@@ -37,8 +37,8 @@ export const ProductCard = async () => {
 				const imageSrc = convertToBase64(product);
 
 				return (
-					<Card key={index} className="w-60 rounded-xl bg-[#FFDF59]">
-						<CardContent className="flex flex-col p-1">
+					<Card key={index} className="w-60 rounded-xl bg-primary">
+						<CardContent className="relative flex flex-col p-1">
 							<Image
 								src={imageSrc}
 								alt={product.productName}
@@ -56,11 +56,20 @@ export const ProductCard = async () => {
 								</CardDescription>
 							</CardHeader>
 						</CardContent>
-						<CardFooter>{/* <EditDataForm product={product} /> */}</CardFooter>
+						<CardFooter className="flex justify-around pt-2">
+							<Link key={product._id} href={`/products/${product._id}`}>
+								<Button className="bg-black text-white">Details</Button>
+							</Link>
+							<Button className=" bg-black text-white">
+								<Plus className="min-h-6 min-w-6" />
+							</Button>
+						</CardFooter>
 					</Card>
 				);
 			})}
-			<AddButton />
+			<div className="grid w-60 place-content-center">
+				<AddButton />
+			</div>
 		</>
 	);
 };

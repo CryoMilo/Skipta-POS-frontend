@@ -1,11 +1,7 @@
 import { OrderTable } from "./OrderTable";
 
 const Orders = () => {
-	return (
-		<div className="p-10">
-			<OrderTable />
-		</div>
-	);
+	return <OrderTable />;
 };
 
 export default Orders;

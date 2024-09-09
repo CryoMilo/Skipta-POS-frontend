@@ -63,28 +63,45 @@ const Sidebar = () => {
 	}, [pathname]);
 
 	return navblacklist.some((link) => link === pathname) ? null : (
-		<div className="m-3 min-h-[100vh] w-56 min-w-28 rounded-xl border-[1px] bg-secondary">
-			<div className="mb-9 mt-4 flex w-full justify-center">
-				<Image
-					className="pt-4"
-					width={80}
-					height={80}
-					src="/icons/SkiptaLogo.svg"
-					alt="main logo"
-				/>
+		<div>
+			<div className="m-3 hidden h-full min-h-[100vh] rounded-xl border-[1px] bg-secondary md:block">
+				<div className="mb-9 mt-4 flex w-full justify-center">
+					<Image
+						className="pt-4"
+						width={80}
+						height={80}
+						src="/icons/SkiptaLogo.svg"
+						alt="main logo"
+					/>
+				</div>
+				<div className="flex flex-col gap-4 px-4">
+					{sidebarElements.map(({ id, route, active, name, icon }) => (
+						<Link key={id} href={route}>
+							<Button
+								onClick={() => changeActiveLink(route)}
+								className={`flex w-full justify-start gap-2 ${active ? "shadow-md" : ""}`}
+								variant={active ? "default" : "secondary"}>
+								{icon}
+								<span className="hidden md:inline">{name}</span>
+							</Button>
+						</Link>
+					))}
+				</div>
 			</div>
-			<div className="flex flex-col gap-4 px-4">
-				{sidebarElements.map(({ id, route, active, name, icon }) => (
-					<Link key={id} href={route}>
-						<Button
-							onClick={() => changeActiveLink(route)}
-							className={`flex w-full justify-center gap-2 xl:justify-start ${active ? "shadow-md" : ""}`}
-							variant={active ? "default" : "secondary"}>
-							{icon}
-							<span className="hidden xl:inline">{name}</span>
-						</Button>
-					</Link>
-				))}
+			{/* Bottom Bar */}
+			<div className="fixed bottom-0 left-[50%] z-20 translate-x-[-50%] rounded-t-xl bg-secondary p-3 md:hidden">
+				<div className="flex flex-row gap-4 px-4">
+					{sidebarElements.map(({ id, route, active, icon }) => (
+						<Link key={id} href={route}>
+							<Button
+								onClick={() => changeActiveLink(route)}
+								className={`flex w-full justify-center gap-2 xl:justify-start ${active ? "shadow-md" : ""}`}
+								variant={active ? "default" : "secondary"}>
+								{icon}
+							</Button>
+						</Link>
+					))}
+				</div>
 			</div>
 		</div>
 	);
