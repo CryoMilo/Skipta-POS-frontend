@@ -9,6 +9,10 @@ const BackButton = () => {
 
 	const currentTab = pathname.split("/")[1];
 
+	if (pathname == `/${currentTab}`) {
+		return null;
+	}
+
 	return (
 		<Link href={`/${currentTab}`} className="hidden gap-2 md:flex">
 			<ChevronLeftIcon className="text-primary" />
