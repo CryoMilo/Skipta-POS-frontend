@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<div>
-			<div className="flex flex-col items-start p-20 lg:flex-row">
+			<div className="flex flex-col items-start p-10 lg:flex-row">
 				<Image
 					src={imageSrc}
 					alt={productData.productName}

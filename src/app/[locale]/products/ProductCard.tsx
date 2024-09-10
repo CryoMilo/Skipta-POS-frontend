@@ -3,7 +3,6 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle
 } from "@/components/ui/card";
@@ -37,17 +36,17 @@ export const ProductCard = async () => {
 				const imageSrc = convertToBase64(product);
 
 				return (
-					<Card key={index} className="w-60 rounded-xl bg-primary">
+					<Card key={index} className="group w-60 rounded-xl bg-primary">
 						<CardContent className="relative flex flex-col p-1">
 							<Image
 								src={imageSrc}
 								alt={product.productName}
 								width={400}
 								height={400}
-								className="w-60 rounded-xl object-cover p-1"
+								className="w-60 rounded-xl object-cover p-1 group-hover:blur-sm"
 							/>
 
-							<CardHeader className="p-1 text-left">
+							<CardHeader className="p-1 text-left group-hover:blur-sm">
 								<CardTitle className="truncate text-left text-secondary">
 									{product.productName}
 								</CardTitle>
@@ -55,15 +54,26 @@ export const ProductCard = async () => {
 									{product.description}
 								</CardDescription>
 							</CardHeader>
+
+							<div className="absolute left-[19%] top-[40%] hidden items-center justify-center gap-4 hover:flex group-hover:flex">
+								<Link key={product._id} href={`/products/${product._id}`}>
+									<Button className="rounded-full bg-black text-white">
+										Details
+									</Button>
+								</Link>
+								<Button className=" rounded-full bg-black text-white">
+									<Plus className="min-h-6 min-w-6" />
+								</Button>
+							</div>
 						</CardContent>
-						<CardFooter className="flex justify-around pt-2">
+						{/* <CardFooter className="flex justify-around pt-2">
 							<Link key={product._id} href={`/products/${product._id}`}>
 								<Button className="bg-black text-white">Details</Button>
 							</Link>
 							<Button className=" bg-black text-white">
 								<Plus className="min-h-6 min-w-6" />
 							</Button>
-						</CardFooter>
+						</CardFooter> */}
 					</Card>
 				);
 			})}
