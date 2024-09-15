@@ -2,8 +2,10 @@ import { Control, Controller } from "react-hook-form";
 import { Input } from "../ui/input";
 import { FormValues } from "@/types/form";
 
+type IngredientField = `ingredients.${number}.item`;
+
 interface TextFieldProps {
-	name: keyof FormValues;
+	name: keyof FormValues | IngredientField;
 	id: string;
 	type: string;
 	placeholder?: string;

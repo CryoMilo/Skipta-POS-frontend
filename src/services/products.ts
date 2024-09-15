@@ -2,13 +2,12 @@ import { TAG_PRODUCTS } from "./tags";
 import { Product } from "@/types/products";
 
 const url = `${process.env.NEXT_PUBLIC_NODE_SKIPTA_BACKEND_URL}/product`;
-console.log(url);
 
 export const getProductList = async () => {
 	const res = await fetch(url, {
 		next: { tags: [TAG_PRODUCTS] },
 		credentials: "include",
-		cache: "no-cache"
+		cache: "no-store"
 	});
 
 	if (!res.ok) {
@@ -36,7 +35,6 @@ export const EditOneProduct = async (
 	productData: Partial<Product>,
 	productID: string
 ) => {
-	// const promise: string = `${url}/${productData._id}`;
 	const data = { ...productData, _id: productID };
 	const requestOptions = {
 		method: "PUT",

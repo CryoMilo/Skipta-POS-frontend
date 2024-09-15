@@ -1,7 +1,7 @@
 export interface Order {
 	_id: string;
 	customerName: string;
-	menuName: string;
+	productName: string;
 	vege: boolean;
 	soup: boolean;
 	orderCompleted: boolean;

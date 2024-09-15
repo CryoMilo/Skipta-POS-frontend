@@ -7,15 +7,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	const productData: Product = data;
 
-	const base64Image = Buffer.from(productData.image.data).toString("base64");
+	const base64Image =
+		productData.image && Buffer.from(productData.image.data).toString("base64");
 	const imageSrc = `data:${productData.contentType};base64,${base64Image}`;
-
-	function csvToArray(csvString: string) {
-		// Trim the string and split it by comma
-		return csvString.split(",").map((item) => item.trim());
-	}
-
-	const ingredientArray = csvToArray(productData.ingredients);
 
 	return (
 		<div>
@@ -28,7 +22,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 					className="p-10"
 				/>
 
-				<section className="px-10 md:border-l-4 md:border-l-yellow-400">
+				<section className="md:border-l-4 md:border-l-yellow-400 md:px-10">
 					<div>
 						<p className="text-2xl text-yellow-400">Name</p>
 						<p>{productData.productName}</p>
@@ -42,8 +36,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 					<div>
 						<p className="text-2xl text-yellow-400">What I have in me?</p>
 						<ol>
-							{ingredientArray.map((element: string) => (
-								<li key={element}> - {element}</li>
+							{productData.ingredients.map((element: { item: string }) => (
+								<li key={element.item}> - {element.item}</li>
 							))}
 						</ol>
 					</div>

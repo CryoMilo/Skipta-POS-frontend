@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import { getProductList } from "@/services/products";
 import { Product } from "@/types/products";
-import { Plus } from "lucide-react";
+import { Edit, Info, Plus } from "lucide-react";
 import Link from "next/link";
 import { convertToBase64 } from "@/utils/convertToBase64";
 
@@ -55,14 +55,14 @@ export const ProductCard = async () => {
 								</CardDescription>
 							</CardHeader>
 
-							<div className="absolute left-[19%] top-[40%] hidden items-center justify-center gap-4 hover:flex group-hover:flex">
+							<div className="absolute left-[27%] top-[40%] hidden items-center justify-center gap-4 hover:flex group-hover:flex">
 								<Link key={product._id} href={`/products/${product._id}`}>
-									<Button className="rounded-full bg-black text-white">
-										Details
+									<Button className="h-12 w-12 rounded-full bg-black text-white">
+										<Info className="min-h-6 min-w-6" />
 									</Button>
 								</Link>
-								<Button className=" rounded-full bg-black text-white">
-									<Plus className="min-h-6 min-w-6" />
+								<Button className=" h-12 w-12 rounded-full bg-black text-white">
+									<Edit className="min-h-6 min-w-6" />
 								</Button>
 							</div>
 						</CardContent>

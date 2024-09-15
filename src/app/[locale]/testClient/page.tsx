@@ -35,7 +35,7 @@ export default function TestClient() {
 			const createdOrder = await createOrder({
 				_id,
 				customerName: data.customerName,
-				menuName: data.menu,
+				productName: data.menu,
 				vege: data.vege,
 				soup: data.soup,
 				orderCompleted: false,

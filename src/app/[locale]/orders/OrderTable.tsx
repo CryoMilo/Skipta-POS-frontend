@@ -41,7 +41,7 @@ const OrderTableRow: React.FC<OrderTableRowProps> = ({ order }) => {
 					<AvatarFallback>V</AvatarFallback>
 				</Avatar>
 			</TableCell>
-			<TableCell className="font-medium">{order.menuName}</TableCell>
+			<TableCell className="font-medium">{order.productName}</TableCell>
 			<TableCell>{order.customerName}</TableCell>
 			<TableCell>
 				<Badge variant="outline">{order.vege ? "Yes" : "No"}</Badge>

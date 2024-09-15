@@ -7,18 +7,9 @@ export interface Product {
 	_id: string;
 	productName: string;
 	description: string;
-	taste: boolean;
-	ingredients: string;
+	taste: string;
+	ingredients: { item: string }[];
 	price: number;
-	image: ImageBuffer;
-	contentType: string;
-	createdAt: string;
-	updatedAt: string;
-}
-
-export interface ProductFormValues {
-	productName: string;
-	description: string;
-	vege: boolean;
-	price: number;
+	image?: ImageBuffer;
+	contentType?: string | undefined;
 }
