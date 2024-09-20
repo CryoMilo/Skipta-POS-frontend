@@ -32,7 +32,7 @@ export default function TestClient() {
 		try {
 			const _id: string = crypto.randomUUID();
 
-			const createdOrder = await createOrder({
+			await createOrder({
 				_id,
 				customerName: data.customerName,
 				productName: data.menu,
@@ -41,7 +41,6 @@ export default function TestClient() {
 				orderCompleted: false,
 				createdAt: currentDate
 			});
-			console.log("Order created successfully:", createdOrder);
 			revalidateOrders();
 			toast({
 				title: "Order Created!"

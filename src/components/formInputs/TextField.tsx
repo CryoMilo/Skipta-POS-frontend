@@ -2,10 +2,15 @@ import { Control, Controller } from "react-hook-form";
 import { Input } from "../ui/input";
 import { FormValues } from "@/types/form";
 
+type PrimitiveField = {
+	[K in keyof FormValues]: FormValues[K] extends string | number | boolean
+		? K
+		: never;
+}[keyof FormValues];
 type IngredientField = `ingredients.${number}.item`;
 
 interface TextFieldProps {
-	name: keyof FormValues | IngredientField;
+	name: PrimitiveField | IngredientField;
 	id: string;
 	type: string;
 	placeholder?: string;

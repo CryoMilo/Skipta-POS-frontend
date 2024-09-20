@@ -11,7 +11,7 @@ import { getProductList } from "@/services/products";
 import { Product } from "@/types/products";
 import { Edit, Info, Plus } from "lucide-react";
 import Link from "next/link";
-import { convertToBase64 } from "@/utils/convertToBase64";
+import { getImageSrc } from "@/utils/getImgSrc";
 
 const AddButton = () => (
 	<div className="m-6 h-[60px] w-[60px] overflow-hidden rounded-full transition-all duration-500 ease-in-out hover:w-[150px] hover:bg-black">
@@ -33,13 +33,11 @@ export const ProductCard = async () => {
 	return (
 		<>
 			{products.map((product, index) => {
-				const imageSrc = convertToBase64(product);
-
 				return (
 					<Card key={index} className="group w-60 rounded-xl bg-primary">
 						<CardContent className="relative flex flex-col p-1">
 							<Image
-								src={imageSrc}
+								src={getImageSrc(product.image)}
 								alt={product.productName}
 								width={400}
 								height={400}

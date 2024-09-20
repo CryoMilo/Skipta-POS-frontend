@@ -1,21 +1,18 @@
 import { getOneProduct } from "@/services/products";
 import { Product } from "@/types/products";
 import Image from "next/image";
+// import Image from "next/image";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 	const data = await getOneProduct(params.slug);
 
 	const productData: Product = data;
 
-	const base64Image =
-		productData.image && Buffer.from(productData.image.data).toString("base64");
-	const imageSrc = `data:${productData.contentType};base64,${base64Image}`;
-
 	return (
 		<div>
 			<div className="flex flex-col items-start p-10 lg:flex-row">
 				<Image
-					src={imageSrc}
+					src={productData.image}
 					alt={productData.productName}
 					width={400}
 					height={400}

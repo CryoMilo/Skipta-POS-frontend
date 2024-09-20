@@ -41,7 +41,7 @@ export const Signup = () => {
 				password: data.password,
 				createdAt: currentDate
 			});
-			console.log("User created successfully:", createdUser);
+
 			revalidateUsers();
 
 			if (Object.hasOwn(createdUser, "error")) {

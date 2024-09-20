@@ -6,9 +6,10 @@ import { Label } from "@/components/ui/label";
 import { createProduct } from "@/services/products";
 import { useToast } from "@/components/ui/use-toast";
 import { FormValues } from "@/types/form";
-import Image from "next/image";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { revalidateProducts } from "../../actions";
+import ImageUpload from "@/components/formInputs/ImageUpload";
+import { convertToBase64 } from "@/utils/convertToBase64";
 
 const ProductCreate = () => {
 	const { toast } = useToast();
@@ -18,7 +19,7 @@ const ProductCreate = () => {
 			description: "",
 			ingredients: [{ item: "" }],
 			taste: "",
-			price: 0
+			price: 4
 		}
 	});
 
@@ -28,18 +29,35 @@ const ProductCreate = () => {
 	});
 
 	const onSubmit: SubmitHandler<FormValues> = async (data) => {
-		alert(JSON.stringify(data));
+		const { image, productName, ingredients, description, taste, price } = data;
+
+		let processedImage: string | undefined;
+
+		if (
+			image &&
+			typeof image === "object" &&
+			"name" in image &&
+			"size" in image
+		) {
+			// Convert the File to a Base64 string
+			processedImage = await convertToBase64(image);
+		} else if (typeof data.image === "string") {
+			// If it's already a Base64 string, just use it
+			processedImage = data.image;
+		}
 
 		try {
-			const _id: string = crypto.randomUUID();
+			const _id: string = crypto.randomUUID(); // Generate unique ID
 
+			// Call API with the processed image
 			const createdProduct = await createProduct({
 				_id,
-				productName: data.productName,
-				description: data.description,
-				ingredients: data.ingredients,
-				taste: data.taste,
-				price: data.price
+				productName,
+				description,
+				ingredients,
+				taste,
+				price,
+				image: processedImage // Base64 encoded image
 			});
 
 			revalidateProducts();
@@ -49,10 +67,11 @@ const ProductCreate = () => {
 					variant: "destructive",
 					title: createdProduct.error
 				});
-			} else
+			} else {
 				toast({
 					title: "Product Created!"
 				});
+			}
 		} catch (error) {
 			toast({
 				title: "An error occurred"
@@ -65,15 +84,8 @@ const ProductCreate = () => {
 			<h1>Create Your Product</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="grid grid-cols-1 place-content-center md:grid-cols-[300px_1fr]">
-					<div>
-						<Image
-							src="/images/shopping-login-img.png"
-							alt="Test"
-							width={400}
-							height={400}
-							className="p-10"
-						/>
-					</div>
+					<ImageUpload id="image" control={control} />
+
 					<section className="grid gap-4 px-5 md:border-l-4 md:border-l-yellow-400 md:px-10">
 						<div className="grid gap-4">
 							<Label htmlFor="first-name">Menu Name</Label>

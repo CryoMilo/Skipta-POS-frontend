@@ -1,7 +1,4 @@
-export interface ImageBuffer {
-	type: string; // The type of the image, e.g., 'Buffer'
-	data: Uint8Array; // The binary data of the image
-}
+export type ImageContentType = "image/jpeg" | "image/png" | "image/gif";
 
 export interface Product {
 	_id: string;
@@ -10,6 +7,5 @@ export interface Product {
 	taste: string;
 	ingredients: { item: string }[];
 	price: number;
-	image?: ImageBuffer;
-	contentType?: string | undefined;
+	image?: string | undefined | File;
 }
