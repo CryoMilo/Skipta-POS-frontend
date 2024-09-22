@@ -67,16 +67,14 @@ const ImageInput: React.FC<ImageInputProps> = ({ onChange, value }) => {
 				)
 			)}
 			{preview && (
-				<div className="mt-4">
-					<Image
-						src={preview}
-						alt="Preview"
-						width={400}
-						height={400}
-						className="h-auto max-w-full"
-						style={{ maxHeight: "300px" }}
-					/>
-				</div>
+				<Image
+					src={preview}
+					alt="Preview"
+					width={400}
+					height={400}
+					className="h-auto max-w-full"
+					style={{ maxHeight: "300px" }}
+				/>
 			)}
 		</div>
 	);
