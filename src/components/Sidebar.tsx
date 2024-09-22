@@ -64,7 +64,7 @@ const Sidebar = () => {
 
 	return navblacklist.some((link) => link === pathname) ? null : (
 		<div>
-			<div className="m-3 hidden h-full min-h-[100vh] rounded-xl border-[1px] bg-secondary md:block">
+			<div className="hidden h-full border-[1px] bg-secondary md:block">
 				<div className="mb-9 mt-4 flex w-full justify-center">
 					<Image
 						className="pt-4"

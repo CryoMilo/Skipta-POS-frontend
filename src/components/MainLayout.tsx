@@ -3,9 +3,9 @@ import Sidebar from "./Sidebar";
 
 const MainLayout = (props: { children: ReactNode }) => {
 	return (
-		<div className="mb-20 flex">
+		<div className="flex h-screen">
 			<Sidebar />
-			<div className="m-5 w-full">{props.children}</div>
+			<div className="m-10 w-full">{props.children}</div>
 		</div>
 	);
 };

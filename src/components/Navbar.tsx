@@ -13,7 +13,7 @@ const Navbar = () => {
 	const pathname = usePathname();
 
 	return navblacklist.some((link) => link === pathname) ? null : (
-		<nav className="flex items-center justify-between p-4 py-6">
+		<nav className="flex items-center justify-between pb-6">
 			<div>
 				<Image
 					width={80}
