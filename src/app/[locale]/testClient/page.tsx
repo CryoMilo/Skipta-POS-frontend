@@ -22,7 +22,7 @@ export default function TestClient() {
 	const { handleSubmit, control } = useForm<FormValues>({
 		defaultValues: {
 			customerName: "",
-			menu: "",
+			productName: "",
 			soup: false,
 			vege: false
 		}
@@ -35,7 +35,7 @@ export default function TestClient() {
 			await createOrder({
 				_id,
 				customerName: data.customerName,
-				productName: data.menu,
+				productName: data.productName,
 				vege: data.vege,
 				soup: data.soup,
 				orderCompleted: false,
@@ -59,11 +59,11 @@ export default function TestClient() {
 			<CardContent>
 				<form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
 					<div className="grid gap-2">
-						<Label htmlFor="menu">Menu</Label>
+						<Label htmlFor="productName">Menu</Label>
 						<TextField
 							control={control}
-							name="menu"
-							id="menu"
+							name="productName"
+							id="productName"
 							type="text"
 							placeholder="Pad Kra Pao"
 							required

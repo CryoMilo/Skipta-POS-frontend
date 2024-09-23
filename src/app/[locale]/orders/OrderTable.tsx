@@ -98,10 +98,13 @@ export const OrderTable = async () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{orders.length !== 0 &&
+						{orders.length !== 0 ? (
+							<p>Hi</p>
+						) : (
 							orders.map((order: Order) => (
 								<OrderTableRow key={order._id} order={order} />
-							))}
+							))
+						)}
 					</TableBody>
 				</Table>
 			</CardContent>
