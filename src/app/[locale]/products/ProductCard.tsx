@@ -59,9 +59,11 @@ export const ProductCard = async () => {
 										<Info className="min-h-6 min-w-6" />
 									</Button>
 								</Link>
-								<Button className=" h-12 w-12 rounded-full bg-black text-white">
-									<Edit className="min-h-6 min-w-6" />
-								</Button>
+								<Link key={product._id} href={`/products/edit/${product._id}`}>
+									<Button className=" h-12 w-12 rounded-full bg-black text-white">
+										<Edit className="min-h-6 min-w-6" />
+									</Button>
+								</Link>
 							</div>
 						</CardContent>
 						{/* <CardFooter className="flex justify-around pt-2">

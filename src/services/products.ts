@@ -6,8 +6,7 @@ const url = `${process.env.NEXT_PUBLIC_NODE_SKIPTA_BACKEND_URL}/product`;
 export const getProductList = async () => {
 	const res = await fetch(url, {
 		next: { tags: [TAG_PRODUCTS] },
-		credentials: "include",
-		cache: "no-store"
+		credentials: "include"
 	});
 
 	if (!res.ok) {
@@ -20,8 +19,7 @@ export const getProductList = async () => {
 export const getOneProduct = async (slug: string) => {
 	const res = await fetch(`${url}/${slug}`, {
 		next: { tags: [TAG_PRODUCTS] },
-		credentials: "include",
-		cache: "no-cache"
+		credentials: "include"
 	});
 
 	if (!res.ok) {
@@ -68,6 +66,25 @@ export const createProduct = async (productData: Product) => {
 
 	if (!res.ok) {
 		throw new Error("Failed to create order");
+	}
+
+	return res.json();
+};
+
+export const updateProduct = async (productData: Product) => {
+	const requestOptions = {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(productData),
+		next: { tags: [TAG_PRODUCTS] }
+	};
+
+	const res = await fetch(`${url}/${productData._id}`, requestOptions);
+
+	if (!res.ok) {
+		throw new Error("Failed to update order");
 	}
 
 	return res.json();
