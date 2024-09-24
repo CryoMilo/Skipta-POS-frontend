@@ -48,7 +48,7 @@ export const ProductCard = async () => {
 								<CardTitle className="truncate text-left text-secondary">
 									{product.productName}
 								</CardTitle>
-								<CardDescription className="line-clamp-3 text-secondary">
+								<CardDescription className="line-clamp-2 h-10 text-secondary">
 									{product.description}
 								</CardDescription>
 							</CardHeader>

@@ -34,7 +34,7 @@ export default async function RootLayout({
 						enableSystem
 						disableTransitionOnChange>
 						<MainLayout>
-							<Navbar />
+							<Navbar locale={locale} />
 							{children}
 						</MainLayout>
 					</ThemeProvider>
