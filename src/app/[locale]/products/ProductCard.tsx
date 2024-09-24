@@ -34,14 +34,14 @@ export const ProductCard = async () => {
 		<>
 			{products.map((product, index) => {
 				return (
-					<Card key={index} className="group w-48 rounded-xl bg-primary">
+					<Card key={index} className="group w-60 rounded-xl bg-primary">
 						<CardContent className="relative flex flex-col p-1">
 							<Image
 								src={getImageSrc(product.image)}
 								alt={product.productName}
 								width={400}
 								height={400}
-								className="w-60 rounded-xl object-cover p-1 group-hover:blur-sm"
+								className="rounded-xl object-cover p-1 group-hover:blur-sm"
 							/>
 
 							<CardHeader className="p-1 text-left group-hover:blur-sm">

@@ -1,7 +1,7 @@
 export type ImageContentType = "image/jpeg" | "image/png" | "image/gif";
 
 export interface Product {
-	_id: string;
+	_id: string | undefined;
 	productName: string;
 	description: string;
 	taste: string;

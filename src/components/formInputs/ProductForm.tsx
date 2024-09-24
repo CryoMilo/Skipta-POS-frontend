@@ -14,23 +14,31 @@ import { Product } from "@/types/products";
 import { getImageSrc } from "@/utils/getImgSrc";
 
 interface ProductFormProps {
-	productData: Product;
+	productData?: Product; // Make this optional for "Create"
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 	const { toast } = useToast();
 
-	const { _id, productName, description, ingredients, taste, image, price } =
-		productData;
+	// Destructure productData only if it exists, providing defaults otherwise
+	const {
+		_id,
+		productName = "",
+		description = "",
+		ingredients = [{ item: "" }],
+		taste = "",
+		image,
+		price = 0
+	} = productData || {};
 
 	const { handleSubmit, control } = useForm<FormValues>({
 		defaultValues: {
-			productName: productName || "",
-			description: description || "",
-			ingredients: ingredients || [{ item: "" }],
-			taste: taste || "",
+			productName,
+			description,
+			ingredients,
+			taste,
 			image: getImageSrc(image),
-			price: price || 0
+			price
 		}
 	});
 
@@ -44,22 +52,21 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 
 		let processedImage: string | undefined;
 
+		// Check if the image needs to be processed to Base64
 		if (
 			image &&
 			typeof image === "object" &&
 			"name" in image &&
 			"size" in image
 		) {
-			// Convert the File to a Base64 string
 			processedImage = await convertToBase64(image);
 		} else if (typeof data.image === "string") {
-			// If it's already a Base64 string, just use it
 			processedImage = data.image;
 		}
 
-		if (productData) {
+		if (productData?._id) {
+			// Edit Product: Call updateProduct API when productData exists
 			try {
-				// Call API with the processed image
 				const updatedProduct = await updateProduct({
 					_id,
 					productName,
@@ -67,7 +74,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 					ingredients,
 					taste,
 					price,
-					image: processedImage // Base64 encoded image
+					image: processedImage
 				});
 
 				revalidateProducts();
@@ -88,11 +95,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 				});
 			}
 		} else {
+			// Create Product: When there's no _id, create a new product
 			try {
-				const _id: string = crypto.randomUUID();
+				const newProductId: string = crypto.randomUUID();
 
 				const createdProduct = await createProduct({
-					_id,
+					_id: newProductId,
 					productName,
 					description,
 					ingredients,
@@ -123,14 +131,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 
 	return (
 		<div className="p-6">
-			<h1>Create Your Product</h1>
+			<h1>{productData ? "Edit Your Product" : "Create Your Product"}</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="grid grid-cols-1 place-content-center md:grid-cols-[300px_1fr]">
 					<ImageUpload id="image" control={control} />
 
 					<section className="grid gap-4 px-5 md:border-l-4 md:border-l-yellow-400 md:px-10">
 						<div className="grid gap-4">
-							<Label htmlFor="first-name">Menu Name</Label>
+							<Label htmlFor="productName">Menu Name</Label>
 							<TextField
 								type="text"
 								id="productName"
@@ -150,7 +158,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 							/>
 						</div>
 						<div className="grid gap-4">
-							<Label htmlFor="first-name">Price</Label>
+							<Label htmlFor="price">Price</Label>
 							<TextField
 								type="number"
 								id="price"
@@ -198,7 +206,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 							/>
 						</div>
 						<Button type="submit" className="w-full">
-							Create
+							{productData ? "Update" : "Create"}
 						</Button>
 					</section>
 				</div>
