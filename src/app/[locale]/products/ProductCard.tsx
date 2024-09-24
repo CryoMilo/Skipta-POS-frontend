@@ -34,7 +34,7 @@ export const ProductCard = async () => {
 		<>
 			{products.map((product, index) => {
 				return (
-					<Card key={index} className="group w-60 rounded-xl bg-primary">
+					<Card key={index} className="group w-48 rounded-xl bg-primary">
 						<CardContent className="relative flex flex-col p-1">
 							<Image
 								src={getImageSrc(product.image)}

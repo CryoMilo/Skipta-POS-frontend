@@ -47,10 +47,10 @@ const Sidebar = () => {
 		}
 	]);
 
-	const changeActiveLink = (route: string) => {
+	const changeActiveLink = (pathname: string) => {
 		setSidebarElements((prevElements) =>
 			prevElements.map((element) =>
-				element.route === route
+				pathname.startsWith(element.route)
 					? { ...element, active: true }
 					: { ...element, active: false }
 			)
