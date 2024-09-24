@@ -9,7 +9,7 @@ import Image from "next/image";
 
 import BackButton from "./BackButton";
 
-const Navbar = () => {
+const Navbar = ({ locale }: { locale: string }) => {
 	const pathname = usePathname();
 
 	return navblacklist.some((link) => link === pathname) ? null : (
@@ -22,7 +22,7 @@ const Navbar = () => {
 					src="/icons/SkiptaLogo.svg"
 					alt="main logo"
 				/>
-				<BackButton />
+				<BackButton locale={locale} />
 			</div>
 
 			<div className="flex gap-3">

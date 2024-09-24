@@ -4,10 +4,11 @@ import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const BackButton = () => {
+const BackButton = ({ locale }: { locale: string }) => {
 	const pathname = usePathname();
 
-	const currentTab = pathname.split("/")[1];
+	const currentTab =
+		locale === "th" ? pathname.split("/")[2] : pathname.split("/")[1];
 
 	if (pathname == `/${currentTab}`) {
 		return null;
