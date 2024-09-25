@@ -23,7 +23,7 @@ const Products = async () => {
 	const products: Product[] = data;
 
 	return (
-		<div className="flex flex-wrap items-center justify-center gap-5 md:justify-normal">
+		<div className="flex flex-wrap items-center justify-center gap-5">
 			{products.map((product) => (
 				<ProductCard key={product._id} product={product} />
 			))}

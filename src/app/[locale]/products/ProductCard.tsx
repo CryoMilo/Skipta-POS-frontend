@@ -20,15 +20,16 @@ export const ProductCard: React.FC<ProductCardProps> = async ({ product }) => {
 	const { _id, image, productName, description } = product;
 
 	return (
-		<Card key={_id} className="group w-48 rounded-xl bg-primary">
+		<Card key={_id} className="group w-56 rounded-xl bg-primary">
 			<CardContent className="relative flex flex-col p-1">
-				<Image
-					src={getImageSrc(image)}
-					alt={productName}
-					width={400}
-					height={400}
-					className="w-60 rounded-xl object-cover p-1 group-hover:blur-sm"
-				/>
+				<div className="relative h-48 w-full">
+					<Image
+						src={getImageSrc(image)}
+						alt={productName}
+						fill
+						className="w-60 rounded-xl object-cover p-1 group-hover:blur-sm"
+					/>
+				</div>
 
 				<CardHeader className="p-1 text-left group-hover:blur-sm">
 					<CardTitle className="truncate text-left text-secondary">
