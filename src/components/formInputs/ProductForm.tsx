@@ -14,31 +14,21 @@ import { Product } from "@/types/products";
 import { getImageSrc } from "@/utils/getImgSrc";
 
 interface ProductFormProps {
-	productData?: Product; // Make this optional for "Create"
+	productData: Product | undefined;
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 	const { toast } = useToast();
 
-	// Destructure productData only if it exists, providing defaults otherwise
-	const {
-		_id,
-		productName = "",
-		description = "",
-		ingredients = [{ item: "" }],
-		taste = "",
-		image,
-		price = 0
-	} = productData || {};
-
 	const { handleSubmit, control } = useForm<FormValues>({
 		defaultValues: {
-			productName,
-			description,
-			ingredients,
-			taste,
-			image: getImageSrc(image),
-			price
+			_id: productData?._id || "",
+			productName: productData?.productName || "",
+			description: productData?.description || "",
+			ingredients: productData?.ingredients || [{ item: "" }],
+			taste: productData?.taste || "",
+			image: getImageSrc(productData?.image),
+			price: productData?.price || 0
 		}
 	});
 
@@ -68,7 +58,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 			// Edit Product: Call updateProduct API when productData exists
 			try {
 				const updatedProduct = await updateProduct({
-					_id,
+					_id: productData?._id,
 					productName,
 					description,
 					ingredients,
@@ -205,8 +195,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 								type="text"
 							/>
 						</div>
-						<Button type="submit" className="w-full">
-							{productData ? "Update" : "Create"}
+						<Button type="submit" className="mt-9 place-self-start">
+							{productData === undefined ? "Create" : "Save"}
 						</Button>
 					</section>
 				</div>
