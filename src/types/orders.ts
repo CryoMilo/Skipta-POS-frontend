@@ -1,9 +1,8 @@
 export interface Order {
-	_id: string;
+	id?: string;
 	customerName: string;
 	productName: string;
-	vege: boolean;
-	soup: boolean;
+	vegan: boolean;
+	products: { productId: string | undefined; quantity: number }[];
 	orderCompleted: boolean;
-	createdAt: string; // ISO 8601 date string
 }

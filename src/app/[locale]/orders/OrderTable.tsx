@@ -44,13 +44,7 @@ const OrderTableRow: React.FC<OrderTableRowProps> = ({ order }) => {
 			<TableCell className="font-medium">{order.productName}</TableCell>
 			<TableCell>{order.customerName}</TableCell>
 			<TableCell>
-				<Badge variant="outline">{order.vege ? "Yes" : "No"}</Badge>
-			</TableCell>
-			<TableCell>
-				<Badge variant="outline">{order.soup ? "Yes" : "No"}</Badge>
-			</TableCell>
-			<TableCell className="hidden md:table-cell">
-				{new Date(order.createdAt).toLocaleString()}
+				<Badge variant="outline">{order.vegan ? "Yes" : "No"}</Badge>
 			</TableCell>
 			<TableCell>{order.orderCompleted ? "Completed" : "Pending"}</TableCell>
 			<TableCell>
@@ -88,7 +82,7 @@ export const OrderTable = async () => {
 							</TableHead>
 							<TableHead>Menu</TableHead>
 							<TableHead>Customer Name</TableHead>
-							<TableHead className="hidden md:table-cell">Vegetables</TableHead>
+							<TableHead className="hidden md:table-cell">Vegan</TableHead>
 							<TableHead className="hidden md:table-cell">Soup</TableHead>
 							<TableHead className="hidden md:table-cell">Created at</TableHead>
 							<TableHead className="hidden md:table-cell">Status</TableHead>

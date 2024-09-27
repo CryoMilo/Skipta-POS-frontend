@@ -12,42 +12,38 @@ import { Label } from "@/components/ui/label";
 import { TextField } from "@/components/formInputs/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CheckboxField } from "@/components/formInputs/CheckboxField";
-import { createOrder } from "@/services/orders";
-import { revalidateOrders } from "../actions";
-import { useToast } from "@/components/ui/use-toast";
+// import { createOrder } from "@/services/orders";
+// import { revalidateOrders } from "../actions";
+// import { useToast } from "@/components/ui/use-toast";
 import { FormValues } from "@/types/form";
 
 export default function TestClient() {
-	const { toast } = useToast();
+	// const { toast } = useToast();
 	const { handleSubmit, control } = useForm<FormValues>({
 		defaultValues: {
 			customerName: "",
 			productName: "",
-			soup: false,
-			vege: false
+			vegan: false
 		}
 	});
 	const onSubmit: SubmitHandler<FormValues> = async (data) => {
-		const currentDate = new Date().toISOString();
-		try {
-			const _id: string = crypto.randomUUID();
-
-			await createOrder({
-				_id,
-				customerName: data.customerName,
-				productName: data.productName,
-				vege: data.vege,
-				soup: data.soup,
-				orderCompleted: false,
-				createdAt: currentDate
-			});
-			revalidateOrders();
-			toast({
-				title: "Order Created!"
-			});
-		} catch (error) {
-			console.error("Failed to create order");
-		}
+		console.log(data);
+		// try {
+		// 	const _id: string = crypto.randomUUID();
+		// 	await createOrder({
+		// 		_id,
+		// 		customerName: data.customerName,
+		// 		productName: data.productName,
+		// 		vegan: data.vegan,
+		// 		orderCompleted: false
+		// 	});
+		// 	revalidateOrders();
+		// 	toast({
+		// 		title: "Order Created!"
+		// 	});
+		// } catch (error) {
+		// 	console.error("Failed to create order");
+		// }
 	};
 
 	return (
@@ -83,19 +79,11 @@ export default function TestClient() {
 					<Label htmlFor="customerName">Add-Ons</Label>
 					<div className="grid grid-cols-2 gap-4">
 						<div className="flex gap-2">
-							<CheckboxField id="soup" name="soup" control={control} />
+							<CheckboxField id="vegan" name="vegan" control={control} />
 							<label
-								htmlFor="soup"
+								htmlFor="Vegan"
 								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-								Soup
-							</label>
-						</div>
-						<div className="flex gap-2">
-							<CheckboxField id="vege" name="vege" control={control} />
-							<label
-								htmlFor="vegetables"
-								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-								Vegetables
+								Vegan
 							</label>
 						</div>
 					</div>

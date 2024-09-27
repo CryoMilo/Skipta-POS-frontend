@@ -87,10 +87,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ productData }) => {
 		} else {
 			// Create Product: When there's no _id, create a new product
 			try {
-				const newProductId: string = crypto.randomUUID();
-
 				const createdProduct = await createProduct({
-					_id: newProductId,
 					productName,
 					description,
 					ingredients,

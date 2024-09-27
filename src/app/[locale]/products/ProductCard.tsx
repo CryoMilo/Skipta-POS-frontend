@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -7,17 +9,40 @@ import {
 	CardTitle
 } from "@/components/ui/card";
 import Image from "next/image";
-import { Edit, Info } from "lucide-react";
+import { Edit, Info, Plus } from "lucide-react";
 import Link from "next/link";
 import { getImageSrc } from "@/utils/getImgSrc";
 import { Product } from "@/types/products";
+import { createOrder } from "@/services/orders";
+import { revalidateOrders } from "../actions";
+// import { useToast } from "@/components/ui/use-toast";
 
 interface ProductCardProps {
 	product: Product;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = async ({ product }) => {
-	const { _id, image, productName, description } = product;
+	const { _id, image, productName, description, vegan } = product;
+	// const { toast } = useToast();
+
+	const addOrder = async () => {
+		try {
+			await createOrder({
+				customerName: "Damian",
+				productName: productName,
+				vegan: vegan || false,
+				orderCompleted: false,
+				products: [{ productId: _id, quantity: 1 }]
+			});
+			revalidateOrders();
+			// toast({
+			// 	title: "Order Created!"
+			// });
+			alert("Done");
+		} catch (error) {
+			console.error("Failed to create order");
+		}
+	};
 
 	return (
 		<Card key={_id} className="group w-56 rounded-xl bg-primary">
@@ -40,7 +65,7 @@ export const ProductCard: React.FC<ProductCardProps> = async ({ product }) => {
 					</CardDescription>
 				</CardHeader>
 
-				<div className="absolute left-[27%] top-[40%] hidden items-center justify-center gap-4 hover:flex group-hover:flex">
+				<div className="absolute left-[50%] top-[50%] hidden translate-x-[-50%] translate-y-[-50%] items-center justify-center gap-4 hover:flex group-hover:flex">
 					<Link key={_id} href={`/products/${_id}`}>
 						<Button className="h-12 w-12 rounded-full bg-black text-white">
 							<Info className="min-h-6 min-w-6" />
@@ -51,6 +76,12 @@ export const ProductCard: React.FC<ProductCardProps> = async ({ product }) => {
 							<Edit className="min-h-6 min-w-6" />
 						</Button>
 					</Link>
+
+					<Button
+						onClick={addOrder}
+						className=" h-12 w-12 rounded-full bg-black text-white">
+						<Plus className="min-h-6 min-w-6" />
+					</Button>
 				</div>
 			</CardContent>
 		</Card>
