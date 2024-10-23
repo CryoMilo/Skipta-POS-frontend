@@ -21,7 +21,7 @@ interface ProductCardProps {
 	product: Product;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = async ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const { _id, image, productName, description, vegan } = product;
 	// const { toast } = useToast();
 

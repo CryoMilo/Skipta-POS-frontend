@@ -1,3 +1,5 @@
+"use server";
+
 import { TAG_USERS } from "./tags";
 import { LoginCredentials, User } from "@/types/user";
 
@@ -20,13 +22,15 @@ export const loginUser = async (userData: LoginCredentials) => {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
-			// Add any additional headers as needed
 		},
 		body: JSON.stringify(userData),
 		next: { tags: [TAG_USERS] }
 	};
 
-	const res = await fetch(`${url}/login`, requestOptions);
+	const res = await fetch(`${url}/login`, {
+		credentials: "include",
+		...requestOptions
+	});
 
 	return res.json();
 };
@@ -36,7 +40,6 @@ export const createUser = async (userData: User) => {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
-			// Add any additional headers as needed
 		},
 		body: JSON.stringify(userData),
 		next: { tags: [TAG_USERS] }

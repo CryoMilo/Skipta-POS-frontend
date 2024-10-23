@@ -40,6 +40,7 @@ export const Login = () => {
 				toast({
 					title: "User Login Successful!"
 				});
+				localStorage.setItem("token", checkedUser?.user.token);
 				router.push("/dashboard", { scroll: true });
 			}
 		} catch (error) {
