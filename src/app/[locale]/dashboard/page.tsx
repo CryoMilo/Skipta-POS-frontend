@@ -6,7 +6,7 @@ const Dashboard = () => {
 
 	console.log("COOKIE", token);
 
-	return <div></div>;
+	return <div>Dashboard</div>;
 };
 
 export default Dashboard;

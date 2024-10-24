@@ -54,4 +54,37 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+
+	.layout {
+		display: grid;
+		grid-template-areas:
+			"sidebar navbar navbar"
+			"sidebar content content";
+		grid-template-rows: 4rem 1fr;
+		grid-template-columns: 14rem 1fr;
+	}
+
+	@media (max-width: 766px) {
+		.layout {
+			display: grid;
+			grid-template-areas:
+				"navbar"
+				"content"
+				"sidebar";
+			grid-template-rows: 5rem 1fr 0;
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.sidebar {
+		grid-area: sidebar;
+	}
+
+	.navbar {
+		grid-area: navbar;
+	}
+
+	.content {
+		grid-area: content;
+	}
 }

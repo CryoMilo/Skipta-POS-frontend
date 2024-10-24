@@ -3,10 +3,9 @@ import { Inter } from "next/font/google";
 import "../../styles/globals.css";
 import TranslationProvider from "@/TranslationProvider";
 import serverTranslation from "../i18n/server";
-import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
-import MainLayout from "@/components/MainLayout";
 import { Toaster } from "@/components/ui/toaster";
+import MainLayout from "@/components/MainLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,10 +32,7 @@ export default async function RootLayout({
 						defaultTheme="system"
 						enableSystem
 						disableTransitionOnChange>
-						<MainLayout>
-							<Navbar locale={locale} />
-							{children}
-						</MainLayout>
+						<MainLayout locale={locale}>{children}</MainLayout>
 					</ThemeProvider>
 				</TranslationProvider>
 				<Toaster />
