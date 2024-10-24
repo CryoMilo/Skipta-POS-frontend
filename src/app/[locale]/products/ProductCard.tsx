@@ -21,7 +21,7 @@ interface ProductCardProps {
 	product: Product;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const { _id, image, productName, description, vegan } = product;
 	// const { toast } = useToast();
 
@@ -87,3 +87,5 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		</Card>
 	);
 };
+
+export default ProductCard;

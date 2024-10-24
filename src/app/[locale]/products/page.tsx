@@ -1,9 +1,12 @@
 import { getProductList } from "@/services/products";
-import { ProductCard } from "./ProductCard";
+
 import { Product } from "@/types/products";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const ProductCard = dynamic(() => import("./ProductCard"));
 
 const AddButton = () => (
 	<div className="m-6 h-[60px] w-[60px] overflow-hidden rounded-full transition-all duration-500 ease-in-out hover:w-[150px] hover:bg-black">
