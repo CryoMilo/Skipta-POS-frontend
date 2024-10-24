@@ -6,7 +6,8 @@ const url = `${process.env.NEXT_PUBLIC_NODE_SKIPTA_BACKEND_URL}/product`;
 export const getProductList = async () => {
 	const res = await fetch(url, {
 		next: { tags: [TAG_PRODUCTS] },
-		credentials: "include"
+		credentials: "include",
+		cache: "no-store"
 	});
 
 	if (!res.ok) {
@@ -19,7 +20,8 @@ export const getProductList = async () => {
 export const getOneProduct = async (slug: string) => {
 	const res = await fetch(`${url}/${slug}`, {
 		next: { tags: [TAG_PRODUCTS] },
-		credentials: "include"
+		credentials: "include",
+		cache: "no-store"
 	});
 
 	if (!res.ok) {
@@ -34,16 +36,16 @@ export const EditOneProduct = async (
 	productID: string
 ) => {
 	const data = { ...productData, _id: productID };
-	const requestOptions = {
+
+	const res = await fetch(url, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(data),
-		next: { tags: [TAG_PRODUCTS] }
-	};
-
-	const res = await fetch(url, requestOptions);
+		next: { tags: [TAG_PRODUCTS] },
+		credentials: "include"
+	});
 
 	if (!res.ok) {
 		throw new Error("Failed to create order");
@@ -53,16 +55,15 @@ export const EditOneProduct = async (
 };
 
 export const createProduct = async (productData: Product) => {
-	const requestOptions = {
+	const res = await fetch(url, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(productData),
-		next: { tags: [TAG_PRODUCTS] }
-	};
-
-	const res = await fetch(url, requestOptions);
+		next: { tags: [TAG_PRODUCTS] },
+		credentials: "include"
+	});
 
 	if (!res.ok) {
 		throw new Error("Failed to create order");
@@ -72,16 +73,15 @@ export const createProduct = async (productData: Product) => {
 };
 
 export const updateProduct = async (productData: Product) => {
-	const requestOptions = {
+	const res = await fetch(`${url}/${productData._id}`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(productData),
-		next: { tags: [TAG_PRODUCTS] }
-	};
-
-	const res = await fetch(`${url}/${productData._id}`, requestOptions);
+		next: { tags: [TAG_PRODUCTS] },
+		credentials: "include"
+	});
 
 	if (!res.ok) {
 		throw new Error("Failed to update order");

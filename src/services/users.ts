@@ -18,34 +18,29 @@ export const getUserList = async () => {
 };
 
 export const loginUser = async (userData: LoginCredentials) => {
-	const requestOptions = {
+	const res = await fetch(`${url}/login`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(userData),
-		next: { tags: [TAG_USERS] }
-	};
-
-	const res = await fetch(`${url}/login`, {
-		credentials: "include",
-		...requestOptions
+		next: { tags: [TAG_USERS] },
+		credentials: "include"
 	});
 
 	return res.json();
 };
 
 export const createUser = async (userData: User) => {
-	const requestOptions = {
+	const res = await fetch(`${url}/register`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(userData),
-		next: { tags: [TAG_USERS] }
-	};
-
-	const res = await fetch(`${url}/register`, requestOptions);
+		next: { tags: [TAG_USERS] },
+		credentials: "include"
+	});
 
 	return res.json();
 };

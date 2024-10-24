@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
-import { revalidateUsers } from "../actions";
+import { createCookie, revalidateUsers } from "../actions";
 import { TextField } from "@/components/formInputs/TextField";
 import { FormValues } from "@/types/form";
 import { loginUser } from "@/services/users";
@@ -41,6 +41,7 @@ export const Login = () => {
 					title: "User Login Successful!"
 				});
 				localStorage.setItem("token", checkedUser?.user.token);
+				createCookie(checkedUser?.user.token);
 				router.push("/dashboard", { scroll: true });
 			}
 		} catch (error) {
