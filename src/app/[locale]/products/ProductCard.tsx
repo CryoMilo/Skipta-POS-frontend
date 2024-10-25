@@ -15,7 +15,7 @@ import { getImageSrc } from "@/utils/getImgSrc";
 import { Product } from "@/types/products";
 import { createOrder } from "@/services/orders";
 import { revalidateOrders } from "../actions";
-// import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ProductCardProps {
 	product: Product;
@@ -23,7 +23,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	const { _id, image, productName, description, vegan } = product;
-	// const { toast } = useToast();
+	const { toast } = useToast();
 
 	const addOrder = async () => {
 		try {
@@ -35,10 +35,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				products: [{ productId: _id, quantity: 1 }]
 			});
 			revalidateOrders();
-			// toast({
-			// 	title: "Order Created!"
-			// });
-			alert("Done");
+			toast({
+				title: "Order Created!"
+			});
 		} catch (error) {
 			console.error("Failed to create order");
 		}

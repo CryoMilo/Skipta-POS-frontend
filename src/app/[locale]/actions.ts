@@ -2,12 +2,10 @@
 
 import { TAG_ORDERS, TAG_PRODUCTS, TAG_USERS } from "@/services/tags";
 import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 export const revalidateOrders = () => {
 	revalidateTag(TAG_ORDERS);
-	redirect("/orders");
 };
 
 export const revalidateUsers = () => {

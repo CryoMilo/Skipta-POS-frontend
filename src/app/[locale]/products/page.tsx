@@ -26,15 +26,18 @@ const Products = async () => {
 	const products: Product[] = data;
 
 	return (
-		<div className="grid grid-cols-1 place-items-center gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-			{products.map((product) => (
-				<ProductCard key={product._id} product={product} />
-			))}
+		<>
+			<h1 className="text-title">Products</h1>
+			<div className="grid grid-cols-1 place-items-center gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+				{products.map((product) => (
+					<ProductCard key={product._id} product={product} />
+				))}
 
-			<div className="grid w-60 place-content-center">
-				<AddButton />
+				<div className="grid w-60 place-content-center">
+					<AddButton />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

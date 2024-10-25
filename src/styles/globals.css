@@ -54,7 +54,9 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+}
 
+@layer components {
 	.layout {
 		display: grid;
 		grid-template-areas:
@@ -86,5 +88,9 @@
 
 	.content {
 		grid-area: content;
+	}
+
+	.text-title {
+		@apply mb-3 p-4 text-3xl uppercase;
 	}
 }
